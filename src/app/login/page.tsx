@@ -57,7 +57,7 @@ export default function LoginPage() {
                 AMISA Data System
               </h1>
             </div>
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-slate-600">
               American International Schools in the Americas
             </p>
           </div>
@@ -87,7 +87,7 @@ export default function LoginPage() {
                     <h3 className="text-sm font-semibold text-slate-900">
                       {role.title}
                     </h3>
-                    <p className="text-xs text-slate-500 mt-0.5">
+                    <p className="text-xs text-slate-600 mt-0.5">
                       {role.subtitle}
                     </p>
                     <p className="text-sm text-slate-600 mt-1.5">
@@ -101,7 +101,7 @@ export default function LoginPage() {
         </div>
 
         {/* Footer */}
-        <p className="text-center mt-6 text-xs text-slate-400">
+        <p className="text-center mt-6 text-xs text-slate-600">
           Demo prototype by{" "}
           <a
             href="https://ahdatalytics.com"

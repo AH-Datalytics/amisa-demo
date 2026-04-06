@@ -125,10 +125,10 @@ export default function AdmissionsForm() {
           Admissions Data Entry
         </h2>
         {officeName && (
-          <p className="text-sm text-slate-500 mt-1">{officeName}</p>
+          <p className="text-sm text-slate-600 mt-1">{officeName}</p>
         )}
         {currentSchool && (
-          <p className="text-sm text-slate-500 mt-0.5">
+          <p className="text-sm text-slate-600 mt-0.5">
             {currentSchool.name} &middot; 2025-26 Academic Year
           </p>
         )}
@@ -158,6 +158,7 @@ export default function AdmissionsForm() {
               required
               value={formData.applications}
               onChange={(e) => handleChange("applications", e.target.value)}
+              aria-invalid={!!errors.applications}
               className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
                 errors.applications
                   ? "border-red-500"
@@ -165,7 +166,7 @@ export default function AdmissionsForm() {
               }`}
             />
             {errors.applications && (
-              <p className="mt-1 text-xs text-red-500">{errors.applications}</p>
+              <p className="mt-1 text-xs text-red-500" role="alert">{errors.applications}</p>
             )}
           </div>
 
@@ -184,6 +185,7 @@ export default function AdmissionsForm() {
               required
               value={formData.acceptances}
               onChange={(e) => handleChange("acceptances", e.target.value)}
+              aria-invalid={!!errors.acceptances}
               className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
                 errors.acceptances
                   ? "border-red-500"
@@ -191,7 +193,7 @@ export default function AdmissionsForm() {
               }`}
             />
             {errors.acceptances && (
-              <p className="mt-1 text-xs text-red-500">{errors.acceptances}</p>
+              <p className="mt-1 text-xs text-red-500" role="alert">{errors.acceptances}</p>
             )}
           </div>
 
@@ -210,6 +212,7 @@ export default function AdmissionsForm() {
               required
               value={formData.enrolled}
               onChange={(e) => handleChange("enrolled", e.target.value)}
+              aria-invalid={!!errors.enrolled}
               className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
                 errors.enrolled
                   ? "border-red-500"
@@ -217,7 +220,7 @@ export default function AdmissionsForm() {
               }`}
             />
             {errors.enrolled && (
-              <p className="mt-1 text-xs text-red-500">{errors.enrolled}</p>
+              <p className="mt-1 text-xs text-red-500" role="alert">{errors.enrolled}</p>
             )}
           </div>
 
@@ -253,6 +256,7 @@ export default function AdmissionsForm() {
               required
               value={formData.waitList}
               onChange={(e) => handleChange("waitList", e.target.value)}
+              aria-invalid={!!errors.waitList}
               className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
                 errors.waitList
                   ? "border-red-500"
@@ -260,7 +264,7 @@ export default function AdmissionsForm() {
               }`}
             />
             {errors.waitList && (
-              <p className="mt-1 text-xs text-red-500">{errors.waitList}</p>
+              <p className="mt-1 text-xs text-red-500" role="alert">{errors.waitList}</p>
             )}
           </div>
 
@@ -279,6 +283,7 @@ export default function AdmissionsForm() {
               required
               value={formData.attrition}
               onChange={(e) => handleChange("attrition", e.target.value)}
+              aria-invalid={!!errors.attrition}
               className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
                 errors.attrition
                   ? "border-red-500"
@@ -286,7 +291,7 @@ export default function AdmissionsForm() {
               }`}
             />
             {errors.attrition && (
-              <p className="mt-1 text-xs text-red-500">{errors.attrition}</p>
+              <p className="mt-1 text-xs text-red-500" role="alert">{errors.attrition}</p>
             )}
           </div>
         </div>
@@ -304,6 +309,7 @@ export default function AdmissionsForm() {
             required
             value={formData.attritionReason}
             onChange={(e) => handleChange("attritionReason", e.target.value)}
+            aria-invalid={!!errors.attritionReason}
             className={`w-full rounded-lg border px-3 py-2 text-sm focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none ${
               errors.attritionReason
                 ? "border-red-500"
@@ -316,7 +322,7 @@ export default function AdmissionsForm() {
             <option value="Other">Other</option>
           </select>
           {errors.attritionReason && (
-            <p className="mt-1 text-xs text-red-500">
+            <p className="mt-1 text-xs text-red-500" role="alert">
               {errors.attritionReason}
             </p>
           )}

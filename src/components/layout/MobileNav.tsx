@@ -68,6 +68,8 @@ export default function MobileNav() {
           onClick={() => setOpen(true)}
           className="text-slate-300 hover:text-white transition-colors"
           aria-label="Open navigation"
+          aria-expanded={open}
+          aria-controls="mobile-nav-drawer"
         >
           <Menu className="w-6 h-6" />
         </button>
@@ -99,6 +101,7 @@ export default function MobileNav() {
 
       {/* Drawer */}
       <div
+        id="mobile-nav-drawer"
         role="dialog"
         aria-modal="true"
         aria-label="Navigation menu"

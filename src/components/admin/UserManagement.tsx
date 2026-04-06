@@ -61,7 +61,7 @@ export default function UserManagement() {
       columnHelper.accessor("email", {
         header: "Email",
         cell: (info) => (
-          <span className="text-slate-500">{info.getValue()}</span>
+          <span className="text-slate-600">{info.getValue()}</span>
         ),
       }),
       columnHelper.accessor("role", {
@@ -102,7 +102,7 @@ export default function UserManagement() {
       columnHelper.accessor("lastLogin", {
         header: "Last Login",
         cell: (info) => (
-          <span className="text-sm text-slate-500">
+          <span className="text-sm text-slate-600">
             {formatDate(info.getValue())}
           </span>
         ),
@@ -123,7 +123,7 @@ export default function UserManagement() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-600">
           {users.length} users across the network
         </p>
         <button
@@ -141,7 +141,7 @@ export default function UserManagement() {
           <div key={user.id} className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
             <div>
               <div className="font-medium text-slate-900">{user.name}</div>
-              <div className="text-sm text-slate-500">{user.email}</div>
+              <div className="text-sm text-slate-600">{user.email}</div>
             </div>
             <div className="flex items-center gap-2">
               <span
@@ -173,7 +173,8 @@ export default function UserManagement() {
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider cursor-pointer select-none hover:text-slate-700"
+                    scope="col"
+                    className="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider cursor-pointer select-none hover:text-slate-700"
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div className="flex items-center gap-1">

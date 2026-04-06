@@ -64,7 +64,7 @@ export default function KPICards({ kpis }: KPICardsProps) {
             <div className="text-3xl font-mono font-bold text-brand-900 pr-7">
               {card.format(value)}
             </div>
-            <div className="mt-1 text-sm text-slate-500">{card.label}</div>
+            <div className="mt-1 text-sm text-slate-600">{card.label}</div>
           </div>
         );
       })}

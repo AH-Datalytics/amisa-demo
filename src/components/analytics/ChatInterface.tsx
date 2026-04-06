@@ -125,16 +125,16 @@ export default function ChatInterface({ externalQuery, onExternalQueryHandled }:
   return (
     <div className="flex flex-col h-full bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
       {/* Messages area */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 min-h-0" role="log" aria-live="polite">
         {messages.map((msg) => (
           <ChatMessage key={msg.id} message={msg} />
         ))}
 
         {isLoading && (
-          <div className="flex justify-start">
+          <div className="flex justify-start" role="status">
             <div className="bg-white border border-slate-200 rounded-2xl rounded-bl-sm px-4 py-3">
-              <div className="flex items-center gap-2 text-sm text-slate-500">
-                <Loader2 className="w-4 h-4 animate-spin" />
+              <div className="flex items-center gap-2 text-sm text-slate-600">
+                <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
                 <span>Analyzing data...</span>
               </div>
             </div>
@@ -166,7 +166,7 @@ export default function ChatInterface({ externalQuery, onExternalQueryHandled }:
             <Send className="w-4 h-4" />
           </button>
         </div>
-        <p className="text-xs text-slate-400 mt-1.5 ml-1">
+        <p className="text-xs text-slate-600 mt-1.5 ml-1">
           Press Enter to send, Shift+Enter for a new line
         </p>
       </div>

@@ -20,7 +20,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
           <div className="bg-brand-800 text-white rounded-2xl rounded-br-sm px-4 py-3">
             <p className="text-sm leading-relaxed">{message.content}</p>
           </div>
-          <p className="text-xs text-slate-400 mt-1 text-right">{formatTime(message.timestamp)}</p>
+          <p className="text-xs text-slate-600 mt-1 text-right">{formatTime(message.timestamp)}</p>
         </div>
       </div>
     );
@@ -35,7 +35,7 @@ export default function ChatMessage({ message }: ChatMessageProps) {
         {message.chartConfig && (
           <ResponseChart config={message.chartConfig} />
         )}
-        <p className="text-xs text-slate-400 mt-1">{formatTime(message.timestamp)}</p>
+        <p className="text-xs text-slate-600 mt-1">{formatTime(message.timestamp)}</p>
       </div>
     </div>
   );

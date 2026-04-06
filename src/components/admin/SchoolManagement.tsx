@@ -144,7 +144,7 @@ export default function SchoolManagement() {
 
   return (
     <div>
-      <p className="text-sm text-slate-500 mb-4">
+      <p className="text-sm text-slate-600 mb-4">
         {schools.length} schools in the AMISA network
       </p>
 
@@ -169,7 +169,7 @@ export default function SchoolManagement() {
                 <span className="font-medium">Enrollment:</span> {formatNumber(school.enrollment)}
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-1">Data Compliance</div>
+                <div className="text-xs text-slate-600 mb-1">Data Compliance</div>
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-slate-100 rounded-full h-1.5">
                     <div
@@ -209,7 +209,8 @@ export default function SchoolManagement() {
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider cursor-pointer select-none hover:text-slate-700"
+                    scope="col"
+                    className="px-4 py-3 text-left text-xs font-medium text-slate-600 uppercase tracking-wider cursor-pointer select-none hover:text-slate-700"
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     <div className="flex items-center gap-1">

@@ -140,6 +140,19 @@ button, a, [role="button"] {
   transition: all 200ms ease-out;
 }
 
+/* Screen reader only utility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 /* --- Card hover lift --- */
 .card-interactive {
   transition: box-shadow 200ms ease-out, transform 200ms ease-out;

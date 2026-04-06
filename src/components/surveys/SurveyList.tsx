@@ -49,7 +49,7 @@ export default function SurveyList({ onViewResults }: SurveyListProps) {
     <div className="space-y-4">
       {/* Header with Create button */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-600">
           {surveyData.length} survey{surveyData.length !== 1 ? "s" : ""}
         </p>
         <Link
@@ -89,7 +89,7 @@ export default function SurveyList({ onViewResults }: SurveyListProps) {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-4 text-xs text-slate-500">
+                  <div className="flex items-center gap-4 text-xs text-slate-600">
                     <span className="inline-flex items-center gap-1">
                       <Calendar className="h-3.5 w-3.5" />
                       Created {formatDate(survey.createdAt)}
@@ -103,7 +103,7 @@ export default function SurveyList({ onViewResults }: SurveyListProps) {
 
                   {/* Progress bar */}
                   <div className="space-y-1">
-                    <div className="flex items-center justify-between text-xs text-slate-500">
+                    <div className="flex items-center justify-between text-xs text-slate-600">
                       <span>
                         {survey.completedSchools} of {survey.totalSchools} schools
                       </span>
