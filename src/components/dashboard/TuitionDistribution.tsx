@@ -122,3 +122,19 @@ export default function TuitionDistribution({
     </div>
   );
 }
+
+export function getTuitionExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const headers = ["School", "Tuition Low", "Tuition High"];
+  const rows = filteredSchools.map((school) => {
+    const latest = getLatestMetrics(metrics, school.id);
+    return [
+      school.name,
+      latest?.tuitionLow ?? "",
+      latest?.tuitionHigh ?? "",
+    ] as (string | number)[];
+  });
+  return { headers, rows };
+}

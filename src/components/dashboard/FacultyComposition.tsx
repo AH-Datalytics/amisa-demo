@@ -141,3 +141,25 @@ export default function FacultyComposition({
     </div>
   );
 }
+
+export function getFacultyExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const headers = [
+    "School",
+    "Host Country (%)",
+    "US Faculty (%)",
+    "Third Country (%)",
+  ];
+  const rows = filteredSchools.map((school) => {
+    const latest = getLatestMetrics(metrics, school.id);
+    return [
+      school.name,
+      latest?.facultyHostCountry ?? "",
+      latest?.facultyUS ?? "",
+      latest?.facultyThirdCountry ?? "",
+    ] as (string | number)[];
+  });
+  return { headers, rows };
+}

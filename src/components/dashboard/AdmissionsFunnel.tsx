@@ -127,3 +127,20 @@ export default function AdmissionsFunnel({
     </div>
   );
 }
+
+export function getAdmissionsExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const headers = ["School", "Applications", "Acceptances", "Enrolled"];
+  const rows = filteredSchools.map((school) => {
+    const latest = getLatestMetrics(metrics, school.id);
+    return [
+      school.name,
+      latest?.applications ?? "",
+      latest?.acceptances ?? "",
+      latest?.enrolledNew ?? "",
+    ] as (string | number)[];
+  });
+  return { headers, rows };
+}

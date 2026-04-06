@@ -136,3 +136,15 @@ export default function RetentionComparison({
     </div>
   );
 }
+
+export function getRetentionExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const headers = ["School", "Retention Rate (%)"];
+  const rows = filteredSchools.map((school) => {
+    const latest = getLatestMetrics(metrics, school.id);
+    return [school.name, latest?.retentionRate ?? ""] as (string | number)[];
+  });
+  return { headers, rows };
+}

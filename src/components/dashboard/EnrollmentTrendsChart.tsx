@@ -146,3 +146,24 @@ export default function EnrollmentTrendsChart({
     </div>
   );
 }
+
+export function getEnrollmentExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const years = [2022, 2023, 2024, 2025, 2026];
+  const headers = ["School", ...years.map(String)];
+  const rows = filteredSchools.map((school) => {
+    const schoolMetrics = metrics
+      .filter((m) => m.schoolId === school.id)
+      .sort((a, b) => a.year - b.year);
+    return [
+      school.name,
+      ...years.map((y) => {
+        const m = schoolMetrics.find((sm) => sm.year === y);
+        return m ? m.enrollment : "";
+      }),
+    ] as (string | number)[];
+  });
+  return { headers, rows };
+}

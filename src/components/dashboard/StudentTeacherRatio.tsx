@@ -147,3 +147,18 @@ export default function StudentTeacherRatio({
     </div>
   );
 }
+
+export function getStudentTeacherExportData(
+  filteredSchools: School[],
+  metrics: AnnualMetrics[]
+) {
+  const headers = ["School", "Student-Teacher Ratio"];
+  const rows = filteredSchools.map((school) => {
+    const latest = getLatestMetrics(metrics, school.id);
+    return [
+      school.name,
+      latest?.studentTeacherRatio ?? "",
+    ] as (string | number)[];
+  });
+  return { headers, rows };
+}
