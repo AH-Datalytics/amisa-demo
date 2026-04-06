@@ -26,6 +26,9 @@ import StudentTeacherRatio, {
 import FacultyComposition, {
   getFacultyExportData,
 } from "@/components/dashboard/FacultyComposition";
+import DataCompletenessHeatMap, {
+  getCompletenessExportData,
+} from "@/components/dashboard/DataCompletenessHeatMap";
 
 function ChartCard({
   title,
@@ -107,6 +110,17 @@ export default function DashboardPage() {
       <KPICards kpis={kpis} />
 
       <PeerFilters filters={filters} setFilters={setFilters} />
+
+      <ChartCard
+        title="Data Submission Status by Office"
+        delay={0}
+        onExport={() => {
+          const { headers, rows } = getCompletenessExportData(filteredSchools);
+          exportCsv(makeExportFilename("data-completeness"), headers, rows);
+        }}
+      >
+        <DataCompletenessHeatMap filteredSchools={filteredSchools} />
+      </ChartCard>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Row 1: Enrollment trends spans full width */}
