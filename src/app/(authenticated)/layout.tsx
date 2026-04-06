@@ -3,16 +3,14 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/lib/auth-context";
+import { SidebarProvider, useSidebar } from "@/lib/sidebar-context";
 import Sidebar from "@/components/layout/Sidebar";
 import MobileNav from "@/components/layout/MobileNav";
 
-export default function AuthenticatedLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+function LayoutInner({ children }: { children: React.ReactNode }) {
   const { currentUser, isLoading } = useAuth();
   const router = useRouter();
+  const { collapsed } = useSidebar();
 
   useEffect(() => {
     if (!isLoading && !currentUser) {
@@ -48,9 +46,29 @@ export default function AuthenticatedLayout({
       </div>
 
       {/* Main content */}
-      <main className="lg:ml-64 pt-14 lg:pt-0 min-h-screen">
-        <div className="p-4 lg:p-6">{children}</div>
+      <main
+        className="pt-14 lg:pt-0 min-h-screen transition-all duration-200"
+        style={{ marginLeft: undefined }}
+      >
+        <div className={`hidden lg:block ${collapsed ? "ml-16" : "ml-64"}`}>
+          <div className="p-4 lg:p-6">{children}</div>
+        </div>
+        <div className="lg:hidden">
+          <div className="p-4 lg:p-6">{children}</div>
+        </div>
       </main>
     </div>
+  );
+}
+
+export default function AuthenticatedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <SidebarProvider>
+      <LayoutInner>{children}</LayoutInner>
+    </SidebarProvider>
   );
 }

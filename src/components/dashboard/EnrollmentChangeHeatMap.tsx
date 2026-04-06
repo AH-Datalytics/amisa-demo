@@ -89,7 +89,7 @@ export default function EnrollmentChangeHeatMap({
                 <td className="py-2 pr-4 font-medium sticky left-0 bg-white text-xs">
                   <Link
                     href={`/schools/${school.id}`}
-                    className="text-slate-700 hover:text-brand-800 hover:underline transition-colors"
+                    className="text-brand-700 hover:text-brand-900 hover:underline transition-colors"
                   >
                     {school.name}
                   </Link>

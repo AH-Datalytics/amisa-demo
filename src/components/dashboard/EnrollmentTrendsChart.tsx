@@ -112,7 +112,7 @@ export default function EnrollmentTrendsChart({
           <Link
             key={school.id}
             href={`/schools/${school.id}`}
-            className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-brand-800 hover:underline transition-colors"
+            className="flex items-center gap-1.5 text-xs text-brand-700 hover:text-brand-900 hover:underline transition-colors"
           >
             <span
               className="inline-block w-4 h-0.5 flex-shrink-0 rounded"

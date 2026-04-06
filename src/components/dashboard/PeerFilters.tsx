@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { X } from "lucide-react";
+import { X, Filter, ChevronDown, ChevronUp } from "lucide-react";
 import type { FilterState } from "@/lib/types";
 import { schools } from "@/data/schools";
 import { getGradeLevel } from "@/lib/filters";
@@ -58,6 +59,7 @@ const filterGroups: FilterGroup[] = [
 ];
 
 export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
+  const [isOpen, setIsOpen] = useState(true);
   const countries = Array.from(new Set(schools.map((s) => s.country))).sort();
   const gradeLevels = Array.from(new Set(schools.map((s) => getGradeLevel(s.gradeRange)))).sort();
   const governanceTypes = ["Nonprofit", "Religious", "Proprietary"];
@@ -73,6 +75,7 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
   };
 
   const hasActiveFilters = Object.values(filters).some((arr) => arr.length > 0);
+  const activeCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
 
   const clearAll = () => {
     setFilters({
@@ -87,7 +90,29 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
+    <div className="bg-white rounded-xl shadow-sm border border-slate-200">
+      <button
+        onClick={() => setIsOpen((prev) => !prev)}
+        className="flex items-center justify-between w-full px-4 py-3 text-left"
+      >
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-slate-500" />
+          <span className="text-sm font-semibold text-slate-700">Peer Group Filters</span>
+          {activeCount > 0 && (
+            <span className="ml-1 px-2 py-0.5 rounded-full text-xs font-medium bg-brand-100 text-brand-800">
+              {activeCount}
+            </span>
+          )}
+        </div>
+        {isOpen ? (
+          <ChevronUp className="w-4 h-4 text-slate-400" />
+        ) : (
+          <ChevronDown className="w-4 h-4 text-slate-400" />
+        )}
+      </button>
+
+      {isOpen && (
+      <div className="px-4 pb-4">
       <div className="flex flex-wrap items-start gap-6">
         {filterGroups.map((group) => (
           <div key={group.key} className="flex flex-col gap-1.5">
@@ -194,7 +219,7 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
         {hasActiveFilters && (
           <div className="flex items-end ml-auto">
             <button
-              onClick={clearAll}
+              onClick={(e) => { e.stopPropagation(); clearAll(); }}
               className="flex items-center gap-1 px-3 py-1 rounded-full text-sm text-red-600 hover:bg-red-50 transition-colors"
             >
               <X className="h-3.5 w-3.5" />
@@ -203,6 +228,8 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
           </div>
         )}
       </div>
+      </div>
+      )}
     </div>
   );
 }

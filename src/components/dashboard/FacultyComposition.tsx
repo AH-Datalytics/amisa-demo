@@ -67,7 +67,7 @@ export default function FacultyComposition({
               return (
                 <g transform={`rotate(-35, ${x}, ${y})`}>
                   <a href={item ? `/schools/${item.id}` : "#"} style={{ cursor: "pointer" }}>
-                    <text x={x} y={y} dy={12} textAnchor="end" fontSize={10} fill="#64748B" className="hover:fill-[#1E40AF] hover:underline">
+                    <text x={x} y={y} dy={12} textAnchor="end" fontSize={10} fill="#1E40AF" className="hover:underline">
                       {payload.value}
                     </text>
                   </a>
