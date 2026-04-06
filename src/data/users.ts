@@ -32,8 +32,8 @@ export const users: User[] = [
   // Additional users across schools
   {
     id: "admin-interamericano",
-    name: "Patricia Mendoza",
-    email: "pmendoza@interamericano.edu.mx",
+    name: "Sarah Mitchell",
+    email: "smitchell@interamericano.edu.mx",
     role: "school_admin",
     schoolId: "colegio-interamericano-norte",
     office: null,
@@ -68,8 +68,8 @@ export const users: User[] = [
   },
   {
     id: "admin-pacifico",
-    name: "Ricardo Flores",
-    email: "rflores@pacifico.edu.cl",
+    name: "David Thompson",
+    email: "dthompson@pacifico.edu.cl",
     role: "school_admin",
     schoolId: "colegio-pacifico",
     office: null,
@@ -77,8 +77,8 @@ export const users: User[] = [
   },
   {
     id: "user-learning-austral",
-    name: "Sofia Valenzuela",
-    email: "svalenzuela@austral.edu.ar",
+    name: "Emily Parker",
+    email: "eparker@austral.edu.ar",
     role: "school_user",
     schoolId: "academia-austral",
     office: "learning",
@@ -86,8 +86,8 @@ export const users: User[] = [
   },
   {
     id: "admin-centroamericana",
-    name: "Miguel Angel Torres",
-    email: "mtorres@centroamericana.edu.gt",
+    name: "Robert Campbell",
+    email: "rcampbell@centroamericana.edu.gt",
     role: "school_admin",
     schoolId: "escuela-centroamericana",
     office: null,
@@ -158,8 +158,8 @@ export const users: User[] = [
   },
   {
     id: "user-alumni-pacifico",
-    name: "Rodrigo Silva",
-    email: "rsilva@pacifico.edu.cl",
+    name: "James Hartley",
+    email: "jhartley@pacifico.edu.cl",
     role: "school_user",
     schoolId: "colegio-pacifico",
     office: "alumni",
