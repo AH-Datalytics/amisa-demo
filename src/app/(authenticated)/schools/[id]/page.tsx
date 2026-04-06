@@ -365,13 +365,13 @@ export default function SchoolDetailPage() {
               <Bar
                 dataKey="us"
                 stackId="faculty"
-                fill="#D97706"
+                fill="#60A5FA"
                 name="US"
               />
               <Bar
                 dataKey="thirdCountry"
                 stackId="faculty"
-                fill="#94A3B8"
+                fill="#CBD5E1"
                 name="Third-Country"
                 radius={[4, 4, 0, 0]}
               />
