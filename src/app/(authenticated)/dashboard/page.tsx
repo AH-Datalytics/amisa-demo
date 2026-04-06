@@ -55,7 +55,7 @@ export default function DashboardPage() {
         <h1 className="text-2xl font-mono font-bold text-brand-900">
           Benchmarking Dashboard
         </h1>
-        <p className="text-slate-500">Loading dashboard...</p>
+        <p className="text-slate-600">Loading dashboard...</p>
       </div>
     );
   }

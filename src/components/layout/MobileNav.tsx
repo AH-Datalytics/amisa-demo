@@ -131,7 +131,9 @@ export default function MobileNav() {
 
         {/* Nav items */}
         <nav className="flex-1 py-1">
-          {navItems.map((item) => {
+          {navItems
+            .filter((item) => !(currentRole === "school_user" && item.href === "/dashboard"))
+            .map((item) => {
             const active =
               pathname === item.href ||
               pathname.startsWith(item.href + "/");

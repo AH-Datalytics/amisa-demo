@@ -41,7 +41,9 @@ export default function Sidebar() {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-1">
-        {navItems.map((item) => {
+        {navItems
+          .filter((item) => !(currentRole === "school_user" && item.href === "/dashboard"))
+          .map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
           return (

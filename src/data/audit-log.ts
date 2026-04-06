@@ -23,7 +23,7 @@ export const auditLog: AuditLogEntry[] = [
     id: "log-003",
     timestamp: "2026-04-05T10:20:00Z",
     userId: "admin-interamericano",
-    userName: "Patricia Mendoza",
+    userName: "Sarah Mitchell",
     action: "Login",
     details: "Logged in from 201.141.32.15",
     schoolId: "colegio-interamericano-norte"
@@ -41,7 +41,7 @@ export const auditLog: AuditLogEntry[] = [
     id: "log-005",
     timestamp: "2026-04-04T16:20:00Z",
     userId: "user-learning-austral",
-    userName: "Sofia Valenzuela",
+    userName: "Emily Parker",
     action: "Data Submission",
     details: "Submitted 2025-26 enrollment data for Learning Office",
     schoolId: "academia-austral"
@@ -122,7 +122,7 @@ export const auditLog: AuditLogEntry[] = [
     id: "log-014",
     timestamp: "2026-03-30T11:30:00Z",
     userId: "admin-pacifico",
-    userName: "Ricardo Flores",
+    userName: "David Thompson",
     action: "User Created",
     details: "Created new user account for Alumni Office",
     schoolId: "colegio-pacifico"
@@ -149,7 +149,7 @@ export const auditLog: AuditLogEntry[] = [
     id: "log-017",
     timestamp: "2026-03-27T09:50:00Z",
     userId: "admin-centroamericana",
-    userName: "Miguel Angel Torres",
+    userName: "Robert Campbell",
     action: "Login",
     details: "Logged in from 190.56.88.44",
     schoolId: "escuela-centroamericana"
@@ -167,7 +167,7 @@ export const auditLog: AuditLogEntry[] = [
     id: "log-019",
     timestamp: "2026-03-25T15:10:00Z",
     userId: "user-alumni-pacifico",
-    userName: "Rodrigo Silva",
+    userName: "James Hartley",
     action: "Login",
     details: "Logged in from 152.168.23.77",
     schoolId: "colegio-pacifico"
