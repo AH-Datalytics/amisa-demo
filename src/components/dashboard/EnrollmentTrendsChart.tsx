@@ -20,20 +20,16 @@ interface EnrollmentTrendsChartProps {
   metrics: AnnualMetrics[];
 }
 
-const CHART_COLORS = [
-  "#1E3A8A",
-  "#1E40AF",
-  "#1D4ED8",
-  "#2563EB",
-  "#3B82F6",
-  "#60A5FA",
-  "#93C5FD",
-  "#BFDBFE",
-  "#D97706",
-  "#64748B",
-  "#94A3B8",
-  "#CBD5E1",
-];
+const REGION_COLORS: Record<string, string> = {
+  "South America": "#1E40AF",
+  "Central America": "#059669",
+  "Caribbean": "#D97706",
+  "North America": "#7C3AED",
+};
+
+function getSchoolColor(school: School): string {
+  return REGION_COLORS[school.region] || "#64748B";
+}
 
 function shortenName(name: string): string {
   return name.length > 15 ? name.slice(0, 15) + "..." : name;
@@ -108,12 +104,12 @@ export default function EnrollmentTrendsChart({
               wrapperStyle={{ fontSize: "12px" }}
             />
           )}
-          {filteredSchools.map((school, i) => (
+          {filteredSchools.map((school) => (
             <Line
               key={school.id}
               type="monotone"
               dataKey={school.id}
-              stroke={CHART_COLORS[i % CHART_COLORS.length]}
+              stroke={getSchoolColor(school)}
               strokeWidth={2}
               dot={{ r: 3 }}
               activeDot={{ r: 5 }}
@@ -123,9 +119,20 @@ export default function EnrollmentTrendsChart({
       </ResponsiveContainer>
 
       {showScrollableLegend && (
-        <div className="mt-3 max-h-24 overflow-y-auto border-t border-slate-100 pt-2">
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 px-2">
-            {filteredSchools.map((school, i) => (
+        <div className="mt-3 border-t border-slate-100 pt-2">
+          <div className="flex flex-wrap gap-x-4 gap-y-1 px-2 mb-2">
+            {Object.entries(REGION_COLORS).map(([region, color]) => (
+              <span key={region} className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+                <span
+                  className="inline-block w-3 h-0.5 flex-shrink-0"
+                  style={{ backgroundColor: color }}
+                />
+                {region}
+              </span>
+            ))}
+          </div>
+          <div className="flex flex-wrap gap-x-4 gap-y-1.5 px-2 max-h-20 overflow-y-auto">
+            {filteredSchools.map((school) => (
               <Link
                 key={school.id}
                 href={`/schools/${school.id}`}
@@ -134,7 +141,7 @@ export default function EnrollmentTrendsChart({
                 <span
                   className="inline-block w-3 h-3 rounded-full flex-shrink-0"
                   style={{
-                    backgroundColor: CHART_COLORS[i % CHART_COLORS.length],
+                    backgroundColor: getSchoolColor(school),
                   }}
                 />
                 {shortenName(school.name)}
