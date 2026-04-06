@@ -75,6 +75,8 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
       region: [],
       curriculum: [],
       country: [],
+      governance: [],
+      gradeLevel: [],
     });
   };
 

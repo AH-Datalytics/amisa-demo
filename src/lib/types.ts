@@ -2,6 +2,12 @@ export type Role = "network_admin" | "school_admin" | "school_user";
 export type CurriculumType = "AP" | "IB" | "AP & IB";
 export type SurveyStatus = "draft" | "pending_approval" | "approved" | "distributed" | "completed";
 export type Office = "superintendent" | "learning" | "hr" | "admissions" | "business" | "medical" | "alumni";
+export type GovernanceType = "Nonprofit" | "Religious" | "Proprietary";
+
+export interface OfficeSubmission {
+  office: Office;
+  status: "submitted" | "partial" | "not_submitted";
+}
 
 export interface School {
   id: string;
@@ -18,6 +24,8 @@ export interface School {
   tuitionHigh: number;
   sizeCategory: "large" | "medium" | "small";
   stateDeptAssisted: boolean;
+  governance: GovernanceType;
+  officeSubmissions: OfficeSubmission[];
 }
 
 export interface AnnualMetrics {
@@ -97,6 +105,8 @@ export interface FilterState {
   region: string[];
   curriculum: string[];
   country: string[];
+  governance: string[];
+  gradeLevel: string[];
 }
 
 export interface ChatMessage {

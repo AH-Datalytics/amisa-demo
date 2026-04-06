@@ -6,6 +6,8 @@ export const defaultFilters: FilterState = {
   region: [],
   curriculum: [],
   country: [],
+  governance: [],
+  gradeLevel: [],
 };
 
 export function getTuitionBand(tuitionHigh: number): string {
