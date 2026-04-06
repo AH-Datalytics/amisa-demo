@@ -3,7 +3,11 @@
 import { useState, useMemo } from "react";
 import { schools } from "@/data/schools";
 import { formatNumber } from "@/lib/utils";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Grid3X3, Download } from "lucide-react";
+import DataCompletenessHeatMap, {
+  getCompletenessExportData,
+} from "@/components/dashboard/DataCompletenessHeatMap";
+import { exportCsv, makeExportFilename } from "@/lib/export-csv";
 import {
   useReactTable,
   getCoreRowModel,
@@ -50,6 +54,7 @@ function complianceTextColor(submitted: number, total: number): string {
 
 export default function SchoolManagement() {
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [showHeatMap, setShowHeatMap] = useState(false);
 
   const data: SchoolRow[] = useMemo(
     () =>
@@ -144,9 +149,44 @@ export default function SchoolManagement() {
 
   return (
     <div>
-      <p className="text-sm text-slate-600 mb-4">
-        {schools.length} schools in the AMISA network
-      </p>
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-sm text-slate-600">
+          {schools.length} schools in the AMISA network
+        </p>
+        <button
+          onClick={() => setShowHeatMap((prev) => !prev)}
+          className={`inline-flex items-center gap-2 px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+            showHeatMap
+              ? "bg-brand-50 border-brand-200 text-brand-700"
+              : "bg-white border-slate-200 text-slate-600 hover:bg-slate-50"
+          }`}
+        >
+          <Grid3X3 className="w-3.5 h-3.5" />
+          Data Completeness
+        </button>
+      </div>
+
+      {showHeatMap && (
+        <div className="mb-6 bg-white rounded-xl shadow-sm border border-slate-200 p-5 animate-fade-in-up">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-mono text-sm font-semibold text-slate-800">
+              Data Submission Status by Office
+            </h3>
+            <button
+              onClick={() => {
+                const { headers, rows } = getCompletenessExportData(schools);
+                exportCsv(makeExportFilename("data-completeness"), headers, rows);
+              }}
+              className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-slate-100"
+              aria-label="Export data completeness as CSV"
+              title="Export as CSV"
+            >
+              <Download className="w-4 h-4" />
+            </button>
+          </div>
+          <DataCompletenessHeatMap filteredSchools={schools} />
+        </div>
+      )}
 
       {/* Mobile Card Layout */}
       <div className="md:hidden space-y-3">

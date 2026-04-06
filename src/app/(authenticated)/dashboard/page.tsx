@@ -8,9 +8,9 @@ import { useFilteredData } from "@/hooks/useFilteredData";
 import { exportCsv, makeExportFilename } from "@/lib/export-csv";
 import KPICards from "@/components/dashboard/KPICards";
 import PeerFilters from "@/components/dashboard/PeerFilters";
-import EnrollmentTrendsChart, {
-  getEnrollmentExportData,
-} from "@/components/dashboard/EnrollmentTrendsChart";
+import EnrollmentChangeHeatMap, {
+  getEnrollmentChangeExportData,
+} from "@/components/dashboard/EnrollmentChangeHeatMap";
 import TuitionDistribution, {
   getTuitionExportData,
 } from "@/components/dashboard/TuitionDistribution";
@@ -26,9 +26,6 @@ import StudentTeacherRatio, {
 import FacultyComposition, {
   getFacultyExportData,
 } from "@/components/dashboard/FacultyComposition";
-import DataCompletenessHeatMap, {
-  getCompletenessExportData,
-} from "@/components/dashboard/DataCompletenessHeatMap";
 
 function ChartCard({
   title,
@@ -111,32 +108,21 @@ export default function DashboardPage() {
 
       <PeerFilters filters={filters} setFilters={setFilters} />
 
-      <ChartCard
-        title="Data Submission Status by Office"
-        delay={0}
-        onExport={() => {
-          const { headers, rows } = getCompletenessExportData(filteredSchools);
-          exportCsv(makeExportFilename("data-completeness"), headers, rows);
-        }}
-      >
-        <DataCompletenessHeatMap filteredSchools={filteredSchools} />
-      </ChartCard>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Row 1: Enrollment trends spans full width */}
+        {/* Row 1: Enrollment change heat map spans full width */}
         <ChartCard
-          title="Enrollment Trends (2022-2026)"
+          title="Enrollment Change (2022-2026)"
           className="md:col-span-2"
           delay={0}
           onExport={() => {
-            const { headers, rows } = getEnrollmentExportData(
+            const { headers, rows } = getEnrollmentChangeExportData(
               filteredSchools,
               metrics
             );
-            exportCsv(makeExportFilename("enrollment-trends"), headers, rows);
+            exportCsv(makeExportFilename("enrollment-change"), headers, rows);
           }}
         >
-          <EnrollmentTrendsChart
+          <EnrollmentChangeHeatMap
             filteredSchools={filteredSchools}
             metrics={metrics}
           />
