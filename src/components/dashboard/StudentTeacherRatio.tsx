@@ -22,7 +22,7 @@ interface StudentTeacherRatioProps {
 }
 
 function shortenName(name: string): string {
-  return name.length > 12 ? name.slice(0, 12) + "..." : name;
+  return name.length > 18 ? name.slice(0, 18) + "..." : name;
 }
 
 function getRatioColor(ratio: number): string {
@@ -63,24 +63,35 @@ export default function StudentTeacherRatio({
     return { chartData: data, avgRatio: avg };
   }, [filteredSchools, metrics]);
 
+  const chartHeight = Math.max(300, chartData.length * 40 + 40);
+
   return (
     <div>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={chartHeight}>
         <BarChart
           data={chartData}
-          margin={{ top: 20, right: 20, left: 10, bottom: 30 }}
+          layout="vertical"
+          margin={{ top: 5, right: 50, left: 10, bottom: 5 }}
         >
-          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" horizontal={false} />
           <XAxis
+            type="number"
+            tick={{ fontSize: 12, fill: "#64748B" }}
+            tickLine={false}
+            tickFormatter={(v) => `${v}:1`}
+          />
+          <YAxis
             dataKey="shortName"
+            type="category"
+            width={140}
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             tick={(props: any) => {
               const { x, y, payload } = props;
               const item = chartData.find((d) => d.shortName === payload.value);
               return (
-                <g transform={`rotate(-35, ${x}, ${y})`}>
+                <g>
                   <a href={item ? `/schools/${item.id}` : "#"} style={{ cursor: "pointer" }}>
-                    <text x={x} y={y} dy={12} textAnchor="end" fontSize={10} fill="#64748B" className="hover:fill-[#1E40AF] hover:underline">
+                    <text x={x - 4} y={y} dy={4} textAnchor="end" fontSize={11} fill="#64748B" className="hover:fill-[#1E40AF] hover:underline">
                       {payload.value}
                     </text>
                   </a>
@@ -88,12 +99,6 @@ export default function StudentTeacherRatio({
               );
             }}
             tickLine={false}
-            height={60}
-          />
-          <YAxis
-            tick={{ fontSize: 12, fill: "#64748B" }}
-            tickLine={false}
-            tickFormatter={(v) => `${v}:1`}
           />
           <Tooltip
             contentStyle={{
@@ -111,16 +116,16 @@ export default function StudentTeacherRatio({
             }}
           />
           <ReferenceLine
-            y={avgRatio}
+            x={avgRatio}
             stroke="#94A3B8"
             strokeDasharray="4 4"
             label={{
               value: `Avg ${formatRatio(avgRatio)}`,
-              position: "right",
+              position: "top",
               style: { fontSize: "11px", fill: "#64748B" },
             }}
           />
-          <Bar dataKey="ratio" radius={[2, 2, 0, 0]} maxBarSize={40}>
+          <Bar dataKey="ratio" radius={[0, 4, 4, 0]}>
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getRatioColor(entry.ratio)} />
             ))}

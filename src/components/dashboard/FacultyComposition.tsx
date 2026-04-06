@@ -52,10 +52,10 @@ export default function FacultyComposition({
 
   return (
     <div>
-      <ResponsiveContainer width="100%" height={340}>
+      <ResponsiveContainer width="100%" height={380}>
         <BarChart
           data={chartData}
-          margin={{ top: 10, right: 20, left: 10, bottom: 30 }}
+          margin={{ top: 10, right: 20, left: 10, bottom: 5 }}
         >
           <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
           <XAxis
@@ -75,7 +75,8 @@ export default function FacultyComposition({
               );
             }}
             tickLine={false}
-            height={60}
+            interval={0}
+            height={80}
           />
           <YAxis
             tick={{ fontSize: 12, fill: "#64748B" }}
