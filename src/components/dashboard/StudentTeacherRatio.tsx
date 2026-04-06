@@ -110,7 +110,7 @@ export default function StudentTeacherRatio({
               style: { fontSize: "11px", fill: "#64748B" },
             }}
           />
-          <Bar dataKey="ratio" radius={[4, 4, 0, 0]} maxBarSize={40}>
+          <Bar dataKey="ratio" radius={[2, 2, 0, 0]} maxBarSize={40}>
             {chartData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getRatioColor(entry.ratio)} />
             ))}

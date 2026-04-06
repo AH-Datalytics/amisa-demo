@@ -91,7 +91,7 @@ export default function AdmissionsFunnel({
             }}
             formatter={(value) => [formatNumber(Number(value)), "Count"]}
           />
-          <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={80}>
+          <Bar dataKey="value" radius={[2, 2, 0, 0]} maxBarSize={80}>
             {funnelData.map((_entry, index) => (
               <Cell key={`cell-${index}`} fill={STAGE_COLORS[index]} />
             ))}

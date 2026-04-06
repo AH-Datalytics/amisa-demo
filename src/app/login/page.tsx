@@ -21,8 +21,8 @@ const roles = [
     title: "School Administrator",
     subtitle: "Academia Americana de Sao Paulo",
     description: "Your school's data and anonymized peer benchmarking",
-    borderColor: "border-accent-600",
-    iconColor: "text-accent-600",
+    borderColor: "border-brand-800",
+    iconColor: "text-brand-800",
   },
   {
     userId: "user-admissions",
@@ -30,8 +30,8 @@ const roles = [
     title: "School User",
     subtitle: "Admissions Office, Academia Americana de Sao Paulo",
     description: "Admissions Office data entry and reporting",
-    borderColor: "border-slate-400",
-    iconColor: "text-slate-400",
+    borderColor: "border-brand-800",
+    iconColor: "text-brand-800",
   },
 ];
 
