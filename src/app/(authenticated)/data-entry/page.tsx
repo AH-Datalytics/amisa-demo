@@ -33,32 +33,26 @@ export default function DataEntryPage() {
         </p>
       </div>
 
-      {/* Network admin sees a different view */}
-      {currentRole === "network_admin" ? (
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-12 text-center">
-          <FileInput className="h-10 w-10 text-slate-300 mx-auto mb-3" />
-          <p className="text-slate-600 font-medium">
-            Select a school to enter data
-          </p>
-          <p className="text-sm text-slate-400 mt-1">
-            As a network administrator, navigate to a specific school to view or
-            manage their data submissions.
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left column: Form + Upload */}
-          <div className="lg:col-span-2 space-y-6">
-            <AdmissionsForm />
-            <FileUploadZone />
-          </div>
-
-          {/* Right column: Submission status */}
-          <div className="lg:col-span-1">
-            <SubmissionStatus />
-          </div>
+      {/* Network admin sees school selector + form */}
+      {currentRole === "network_admin" && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3 text-sm text-blue-800 flex items-center gap-2">
+          <FileInput className="h-4 w-4 flex-shrink-0" />
+          Viewing as Network Admin &mdash; showing sample data entry for Academia Americana de Sao Paulo
         </div>
       )}
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Left column: Form + Upload */}
+        <div className="lg:col-span-2 space-y-6">
+          <AdmissionsForm />
+          <FileUploadZone />
+        </div>
+
+        {/* Right column: Submission status */}
+        <div className="lg:col-span-1">
+          <SubmissionStatus />
+        </div>
+      </div>
     </div>
   );
 }
