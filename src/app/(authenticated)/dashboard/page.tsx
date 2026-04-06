@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Download } from "lucide-react";
+import { Download, BarChart3, LineChart as LineChartIcon } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { useFilteredData } from "@/hooks/useFilteredData";
 import { exportCsv, makeExportFilename } from "@/lib/export-csv";
@@ -11,6 +11,9 @@ import PeerFilters from "@/components/dashboard/PeerFilters";
 import EnrollmentChangeHeatMap, {
   getEnrollmentChangeExportData,
 } from "@/components/dashboard/EnrollmentChangeHeatMap";
+import EnrollmentTrendsChart, {
+  getEnrollmentExportData,
+} from "@/components/dashboard/EnrollmentTrendsChart";
 import TuitionDistribution, {
   getTuitionExportData,
 } from "@/components/dashboard/TuitionDistribution";
@@ -33,12 +36,14 @@ function ChartCard({
   className = "",
   delay = 0,
   onExport,
+  headerExtra,
 }: {
   title: string;
   children: React.ReactNode;
   className?: string;
   delay?: number;
   onExport?: () => void;
+  headerExtra?: React.ReactNode;
 }) {
   return (
     <div
@@ -49,16 +54,19 @@ function ChartCard({
         <h2 className="font-mono text-lg font-semibold text-slate-800">
           {title}
         </h2>
-        {onExport && (
-          <button
-            onClick={onExport}
-            className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-slate-100"
-            aria-label={`Export ${title} as CSV`}
-            title="Export as CSV"
-          >
-            <Download className="w-4 h-4" />
-          </button>
-        )}
+        <div className="flex items-center gap-2">
+          {headerExtra}
+          {onExport && (
+            <button
+              onClick={onExport}
+              className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-slate-100"
+              aria-label={`Export ${title} as CSV`}
+              title="Export as CSV"
+            >
+              <Download className="w-4 h-4" />
+            </button>
+          )}
+        </div>
       </div>
       {children}
     </div>
@@ -70,6 +78,9 @@ export default function DashboardPage() {
   const router = useRouter();
   const { filters, setFilters, filteredSchools, kpis, metrics } =
     useFilteredData();
+  const [enrollmentView, setEnrollmentView] = useState<"heatmap" | "lines">(
+    "heatmap"
+  );
 
   useEffect(() => {
     if (!isLoading && currentRole === "school_user") {
@@ -109,23 +120,70 @@ export default function DashboardPage() {
       <PeerFilters filters={filters} setFilters={setFilters} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Row 1: Enrollment change heat map spans full width */}
+        {/* Row 1: Enrollment spans full width with view toggle */}
         <ChartCard
-          title="Enrollment Change (2022-2026)"
+          title={
+            enrollmentView === "heatmap"
+              ? "Enrollment Change (2022-2026)"
+              : "Enrollment Trends (2022-2026)"
+          }
           className="md:col-span-2"
           delay={0}
           onExport={() => {
-            const { headers, rows } = getEnrollmentChangeExportData(
-              filteredSchools,
-              metrics
-            );
-            exportCsv(makeExportFilename("enrollment-change"), headers, rows);
+            if (enrollmentView === "heatmap") {
+              const { headers, rows } = getEnrollmentChangeExportData(
+                filteredSchools,
+                metrics
+              );
+              exportCsv(makeExportFilename("enrollment-change"), headers, rows);
+            } else {
+              const { headers, rows } = getEnrollmentExportData(
+                filteredSchools,
+                metrics
+              );
+              exportCsv(makeExportFilename("enrollment-trends"), headers, rows);
+            }
           }}
+          headerExtra={
+            <div className="flex items-center rounded-lg border border-slate-200 overflow-hidden">
+              <button
+                onClick={() => setEnrollmentView("heatmap")}
+                className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium transition-colors ${
+                  enrollmentView === "heatmap"
+                    ? "bg-brand-50 text-brand-700"
+                    : "text-slate-500 hover:bg-slate-50"
+                }`}
+                title="Heat map view"
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                Heat Map
+              </button>
+              <button
+                onClick={() => setEnrollmentView("lines")}
+                className={`flex items-center gap-1 px-2.5 py-1 text-xs font-medium transition-colors border-l border-slate-200 ${
+                  enrollmentView === "lines"
+                    ? "bg-brand-50 text-brand-700"
+                    : "text-slate-500 hover:bg-slate-50"
+                }`}
+                title="Line chart view"
+              >
+                <LineChartIcon className="w-3.5 h-3.5" />
+                Lines
+              </button>
+            </div>
+          }
         >
-          <EnrollmentChangeHeatMap
-            filteredSchools={filteredSchools}
-            metrics={metrics}
-          />
+          {enrollmentView === "heatmap" ? (
+            <EnrollmentChangeHeatMap
+              filteredSchools={filteredSchools}
+              metrics={metrics}
+            />
+          ) : (
+            <EnrollmentTrendsChart
+              filteredSchools={filteredSchools}
+              metrics={metrics}
+            />
+          )}
         </ChartCard>
 
         {/* Row 2: Tuition and Admissions side by side */}
