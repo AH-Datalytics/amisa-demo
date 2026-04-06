@@ -17,14 +17,17 @@ function ChartCard({
   title,
   children,
   className = "",
+  delay = 0,
 }: {
   title: string;
   children: React.ReactNode;
   className?: string;
+  delay?: number;
 }) {
   return (
     <div
-      className={`bg-white rounded-xl shadow-sm border border-slate-200 p-5 ${className}`}
+      className={`bg-white rounded-xl shadow-sm border border-slate-200 p-5 animate-fade-in-up ${className}`}
+      style={{ animationDelay: `${delay}ms` }}
     >
       <h2 className="font-mono text-lg font-semibold text-slate-800 mb-4">
         {title}
@@ -77,9 +80,9 @@ export default function DashboardPage() {
 
       <PeerFilters filters={filters} setFilters={setFilters} />
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Row 1: Enrollment trends spans full width */}
-        <ChartCard title="Enrollment Trends (2022-2026)" className="lg:col-span-2">
+        <ChartCard title="Enrollment Trends (2022-2026)" className="md:col-span-2" delay={0}>
           <EnrollmentTrendsChart
             filteredSchools={filteredSchools}
             metrics={metrics}
@@ -87,14 +90,14 @@ export default function DashboardPage() {
         </ChartCard>
 
         {/* Row 2: Tuition and Admissions side by side */}
-        <ChartCard title="Tuition Distribution">
+        <ChartCard title="Tuition Distribution" delay={100}>
           <TuitionDistribution
             filteredSchools={filteredSchools}
             metrics={metrics}
           />
         </ChartCard>
 
-        <ChartCard title="Admissions Funnel (Current Year)">
+        <ChartCard title="Admissions Funnel (Current Year)" delay={150}>
           <AdmissionsFunnel
             filteredSchools={filteredSchools}
             metrics={metrics}
@@ -102,14 +105,14 @@ export default function DashboardPage() {
         </ChartCard>
 
         {/* Row 3: Retention and Student-Teacher Ratio side by side */}
-        <ChartCard title="Retention Rate Comparison">
+        <ChartCard title="Retention Rate Comparison" delay={200}>
           <RetentionComparison
             filteredSchools={filteredSchools}
             metrics={metrics}
           />
         </ChartCard>
 
-        <ChartCard title="Student-Teacher Ratio">
+        <ChartCard title="Student-Teacher Ratio" delay={250}>
           <StudentTeacherRatio
             filteredSchools={filteredSchools}
             metrics={metrics}
@@ -117,7 +120,7 @@ export default function DashboardPage() {
         </ChartCard>
 
         {/* Row 4: Faculty composition spans full width */}
-        <ChartCard title="Faculty Nationality Composition" className="lg:col-span-2">
+        <ChartCard title="Faculty Nationality Composition" className="md:col-span-2" delay={300}>
           <FacultyComposition
             filteredSchools={filteredSchools}
             metrics={metrics}

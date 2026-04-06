@@ -50,14 +50,15 @@ const cards = [
 
 export default function KPICards({ kpis }: KPICardsProps) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-      {cards.map((card) => {
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      {cards.map((card, index) => {
         const Icon = card.icon;
         const value = kpis[card.key];
         return (
           <div
             key={card.key}
-            className="relative bg-white rounded-xl shadow-sm border border-slate-200 p-5"
+            className="relative bg-white rounded-xl shadow-sm border border-slate-200 p-5 animate-fade-in-up card-interactive"
+            style={{ animationDelay: `${index * 60}ms` }}
           >
             <Icon className="absolute top-4 right-4 h-5 w-5 text-slate-300" />
             <div className="text-3xl font-mono font-bold text-brand-900">

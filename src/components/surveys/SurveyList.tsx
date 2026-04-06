@@ -73,7 +73,7 @@ export default function SurveyList({ onViewResults }: SurveyListProps) {
           return (
             <div
               key={survey.id}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 transition hover:shadow-md"
+              className="bg-white rounded-xl shadow-sm border border-slate-200 p-5 transition hover:shadow-md card-interactive"
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                 {/* Left: info */}

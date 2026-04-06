@@ -48,7 +48,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg mx-2 text-sm transition-colors ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg mx-2 text-sm transition-colors active:scale-[0.98] ${
                 active
                   ? "bg-sidebar-active text-white"
                   : "text-slate-400 hover:bg-sidebar-hover hover:text-slate-200"
@@ -65,7 +65,7 @@ export default function Sidebar() {
             <div className="mx-4 my-3 border-b border-slate-700" />
             <Link
               href={adminItem.href}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg mx-2 text-sm transition-colors ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg mx-2 text-sm transition-colors active:scale-[0.98] ${
                 pathname === adminItem.href || pathname.startsWith(adminItem.href + "/")
                   ? "bg-sidebar-active text-white"
                   : "text-slate-400 hover:bg-sidebar-hover hover:text-slate-200"

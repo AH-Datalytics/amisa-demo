@@ -48,7 +48,7 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-slate-50 px-4">
       <div className="w-full max-w-2xl">
         {/* Main card */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 sm:p-10">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-8 sm:p-10 animate-scale-in">
           {/* Header */}
           <div className="text-center mb-6">
             <div className="flex items-center justify-center gap-2.5 mb-2">
@@ -70,13 +70,13 @@ export default function LoginPage() {
 
           {/* Role cards */}
           <div className="space-y-3">
-            {roles.map((role) => {
+            {roles.map((role, index) => {
               const Icon = role.icon;
               return (
                 <button
                   key={role.userId}
                   onClick={() => handleLogin(role.userId)}
-                  className={`w-full text-left bg-white rounded-lg shadow-sm border border-slate-200 border-l-4 ${role.borderColor} p-5 hover:shadow-md transition-shadow cursor-pointer flex items-start gap-4 group`}
+                  className={`w-full text-left bg-white rounded-lg shadow-sm border border-slate-200 border-l-4 ${role.borderColor} p-5 hover:shadow-md transition-shadow cursor-pointer flex items-start gap-4 group animate-fade-in-up stagger-${index + 1}`}
                 >
                   <div
                     className={`mt-0.5 flex-shrink-0 ${role.iconColor} group-hover:scale-110 transition-transform`}

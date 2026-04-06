@@ -135,7 +135,37 @@ export default function UserManagement() {
         </button>
       </div>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-3">
+        {users.map((user) => (
+          <div key={user.id} className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
+            <div>
+              <div className="font-medium text-slate-900">{user.name}</div>
+              <div className="text-sm text-slate-500">{user.email}</div>
+            </div>
+            <div className="flex items-center gap-2">
+              <span
+                className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${roleBadgeStyles[user.role]}`}
+              >
+                {roleLabels[user.role]}
+              </span>
+            </div>
+            <div className="text-sm text-slate-700">
+              <span className="font-medium">School:</span>{" "}
+              {user.schoolId ? schoolMap[user.schoolId] || user.schoolId : "AMISA HQ"}
+            </div>
+            {user.office && (
+              <div className="text-sm text-slate-600">
+                <span className="font-medium">Office:</span>{" "}
+                {officeLabels[user.office] || user.office}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Table Layout */}
+      <div className="hidden md:block overflow-x-auto rounded-lg border border-slate-200">
         <table className="w-full text-sm">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

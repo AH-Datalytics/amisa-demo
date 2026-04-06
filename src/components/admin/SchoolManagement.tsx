@@ -148,7 +148,60 @@ export default function SchoolManagement() {
         {schools.length} schools in the AMISA network
       </p>
 
-      <div className="overflow-x-auto rounded-lg border border-slate-200">
+      {/* Mobile Card Layout */}
+      <div className="md:hidden space-y-3">
+        {data.map((school) => {
+          const pct = (school.complianceSubmitted / school.complianceTotal) * 100;
+          return (
+            <div key={school.id} className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
+              <div>
+                <a
+                  href={`/schools/${school.id}`}
+                  className="font-medium text-brand-800 hover:text-brand-900 hover:underline"
+                >
+                  {school.name}
+                </a>
+              </div>
+              <div className="text-sm text-slate-700">
+                <span className="font-medium">Country:</span> {school.country}
+              </div>
+              <div className="text-sm text-slate-700">
+                <span className="font-medium">Enrollment:</span> {formatNumber(school.enrollment)}
+              </div>
+              <div>
+                <div className="text-xs text-slate-500 mb-1">Data Compliance</div>
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 bg-slate-100 rounded-full h-1.5">
+                    <div
+                      className={`h-1.5 rounded-full ${complianceColor(
+                        school.complianceSubmitted,
+                        school.complianceTotal
+                      )}`}
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
+                  <span
+                    className={`text-xs font-medium ${complianceTextColor(
+                      school.complianceSubmitted,
+                      school.complianceTotal
+                    )}`}
+                  >
+                    {school.complianceSubmitted}/{school.complianceTotal}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <span className="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-medium text-green-700">
+                  Active
+                </span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Desktop Table Layout */}
+      <div className="hidden md:block overflow-x-auto rounded-lg border border-slate-200">
         <table className="w-full text-sm">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

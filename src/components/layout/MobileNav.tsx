@@ -91,14 +91,18 @@ export default function MobileNav() {
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 bg-black/50 z-50 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-[60] lg:hidden"
           onClick={() => setOpen(false)}
+          aria-hidden="true"
         />
       )}
 
       {/* Drawer */}
       <div
-        className={`fixed top-0 left-0 h-full w-72 bg-sidebar-bg z-50 transform transition-transform duration-200 ease-in-out lg:hidden ${
+        role="dialog"
+        aria-modal="true"
+        aria-label="Navigation menu"
+        className={`fixed top-0 left-0 h-full w-72 bg-sidebar-bg z-[70] transform transition-transform duration-200 ease-in-out lg:hidden ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

@@ -94,10 +94,10 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
                     key={option.value}
                     onClick={() => toggleFilter(group.key, option.value)}
                     className={cn(
-                      "px-3 py-1 rounded-full text-sm transition-colors",
+                      "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
                       isActive
                         ? "bg-brand-800 text-white"
-                        : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300"
+                        : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
                     )}
                   >
                     {option.label}
