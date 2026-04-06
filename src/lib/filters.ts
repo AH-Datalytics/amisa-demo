@@ -19,6 +19,7 @@ export function getTuitionBand(tuitionHigh: number): string {
 export function getGradeLevel(gradeRange: string): string {
   if (gradeRange.startsWith("PreK")) return "PreK-12";
   if (gradeRange.startsWith("K")) return "K-12";
+  if (gradeRange.startsWith("6")) return "6-12";
   return gradeRange;
 }
 

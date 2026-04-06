@@ -12,57 +12,60 @@ interface PeerFiltersProps {
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
 }
 
-interface FilterGroup {
-  label: string;
-  key: keyof FilterState;
-  options: { value: string; label: string }[];
-}
+const pillClass = (isActive: boolean) =>
+  cn(
+    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95 whitespace-nowrap",
+    isActive
+      ? "bg-brand-800 text-white"
+      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
+  );
 
-const filterGroups: FilterGroup[] = [
-  {
-    label: "Size",
-    key: "sizeCategory",
-    options: [
-      { value: "large", label: "Large (1200+)" },
-      { value: "medium", label: "Medium (400-1200)" },
-      { value: "small", label: "Small (<400)" },
-    ],
-  },
-  {
-    label: "Tuition",
-    key: "tuitionBand",
-    options: [
-      { value: "budget", label: "Budget (<$10k)" },
-      { value: "mid", label: "Mid ($10k-$18k)" },
-      { value: "premium", label: "Premium ($18k+)" },
-    ],
-  },
-  {
-    label: "Region",
-    key: "region",
-    options: [
-      { value: "South America", label: "South America" },
-      { value: "Central America", label: "Central America" },
-      { value: "Caribbean", label: "Caribbean" },
-      { value: "North America", label: "North America" },
-    ],
-  },
-  {
-    label: "Curriculum",
-    key: "curriculum",
-    options: [
-      { value: "AP", label: "AP" },
-      { value: "IB", label: "IB" },
-      { value: "AP & IB", label: "AP & IB" },
-    ],
-  },
-];
+function FilterGroup({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col gap-1.5 min-w-0">
+      <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+        {label}
+      </span>
+      <div className="flex flex-wrap gap-1.5">{children}</div>
+    </div>
+  );
+}
 
 export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
   const [isOpen, setIsOpen] = useState(true);
   const countries = Array.from(new Set(schools.map((s) => s.country))).sort();
-  const gradeLevels = Array.from(new Set(schools.map((s) => getGradeLevel(s.gradeRange)))).sort();
+  const gradeLevels = Array.from(
+    new Set(schools.map((s) => getGradeLevel(s.gradeRange)))
+  ).sort();
   const governanceTypes = ["Nonprofit", "Religious", "Proprietary"];
+
+  const sizeOptions = [
+    { value: "large", label: "Large (1200+)" },
+    { value: "medium", label: "Medium (400-1200)" },
+    { value: "small", label: "Small (<400)" },
+  ];
+  const tuitionOptions = [
+    { value: "budget", label: "Budget (<$10k)" },
+    { value: "mid", label: "Mid ($10k-$18k)" },
+    { value: "premium", label: "Premium ($18k+)" },
+  ];
+  const regionOptions = [
+    { value: "South America", label: "South America" },
+    { value: "Central America", label: "Central America" },
+    { value: "Caribbean", label: "Caribbean" },
+    { value: "North America", label: "North America" },
+  ];
+  const curriculumOptions = [
+    { value: "AP", label: "AP" },
+    { value: "IB", label: "IB" },
+    { value: "AP & IB", label: "AP & IB" },
+  ];
 
   const toggleFilter = (key: keyof FilterState, value: string) => {
     setFilters((prev) => {
@@ -75,7 +78,10 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
   };
 
   const hasActiveFilters = Object.values(filters).some((arr) => arr.length > 0);
-  const activeCount = Object.values(filters).reduce((sum, arr) => sum + arr.length, 0);
+  const activeCount = Object.values(filters).reduce(
+    (sum, arr) => sum + arr.length,
+    0
+  );
 
   const clearAll = () => {
     setFilters({
@@ -97,7 +103,9 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
       >
         <div className="flex items-center gap-2">
           <Filter className="w-4 h-4 text-slate-500" />
-          <span className="text-sm font-semibold text-slate-700">Peer Group Filters</span>
+          <span className="text-sm font-semibold text-slate-700">
+            Peer Group Filters
+          </span>
           {activeCount > 0 && (
             <span className="ml-1 px-2 py-0.5 rounded-full text-xs font-medium bg-brand-100 text-brand-800">
               {activeCount}
@@ -112,123 +120,113 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
       </button>
 
       {isOpen && (
-      <div className="px-4 pb-4">
-      <div className="flex flex-wrap items-start gap-6">
-        {filterGroups.map((group) => (
-          <div key={group.key} className="flex flex-col gap-1.5">
-            <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-              {group.label}
-            </span>
-            <div className="flex flex-wrap gap-1.5">
-              {group.options.map((option) => {
-                const isActive = filters[group.key].includes(option.value);
-                return (
-                  <button
-                    key={option.value}
-                    onClick={() => toggleFilter(group.key, option.value)}
-                    className={cn(
-                      "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
-                      isActive
-                        ? "bg-brand-800 text-white"
-                        : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
-                    )}
-                  >
-                    {option.label}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-
-        <div className="flex flex-col gap-1.5">
-          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-            Country
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {countries.map((c) => {
-              const isActive = filters.country.includes(c);
-              return (
+        <div className="px-4 pb-4 space-y-3">
+          {/* Row 1: Size, Tuition, Region */}
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
+            <FilterGroup label="Size">
+              {sizeOptions.map((o) => (
                 <button
-                  key={c}
-                  onClick={() => toggleFilter("country", c)}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
-                    isActive
-                      ? "bg-brand-800 text-white"
-                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
-                  )}
+                  key={o.value}
+                  onClick={() => toggleFilter("sizeCategory", o.value)}
+                  className={pillClass(filters.sizeCategory.includes(o.value))}
                 >
-                  {c}
+                  {o.label}
                 </button>
-              );
-            })}
-          </div>
-        </div>
+              ))}
+            </FilterGroup>
 
-        <div className="flex flex-col gap-1.5">
-          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-            Grade Levels
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {gradeLevels.map((g) => {
-              const isActive = filters.gradeLevel.includes(g);
-              return (
+            <FilterGroup label="Tuition">
+              {tuitionOptions.map((o) => (
+                <button
+                  key={o.value}
+                  onClick={() => toggleFilter("tuitionBand", o.value)}
+                  className={pillClass(filters.tuitionBand.includes(o.value))}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </FilterGroup>
+
+            <FilterGroup label="Region">
+              {regionOptions.map((o) => (
+                <button
+                  key={o.value}
+                  onClick={() => toggleFilter("region", o.value)}
+                  className={pillClass(filters.region.includes(o.value))}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </FilterGroup>
+          </div>
+
+          {/* Row 2: Country */}
+          <FilterGroup label="Country">
+            {countries.map((c) => (
+              <button
+                key={c}
+                onClick={() => toggleFilter("country", c)}
+                className={pillClass(filters.country.includes(c))}
+              >
+                {c}
+              </button>
+            ))}
+          </FilterGroup>
+
+          {/* Row 3: Curriculum, Grade Levels, Governance */}
+          <div className="flex flex-wrap items-start gap-x-8 gap-y-3">
+            <FilterGroup label="Curriculum">
+              {curriculumOptions.map((o) => (
+                <button
+                  key={o.value}
+                  onClick={() => toggleFilter("curriculum", o.value)}
+                  className={pillClass(filters.curriculum.includes(o.value))}
+                >
+                  {o.label}
+                </button>
+              ))}
+            </FilterGroup>
+
+            <FilterGroup label="Grade Levels">
+              {gradeLevels.map((g) => (
                 <button
                   key={g}
                   onClick={() => toggleFilter("gradeLevel", g)}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
-                    isActive
-                      ? "bg-brand-800 text-white"
-                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
-                  )}
+                  className={pillClass(filters.gradeLevel.includes(g))}
                 >
                   {g}
                 </button>
-              );
-            })}
-          </div>
-        </div>
+              ))}
+            </FilterGroup>
 
-        <div className="flex flex-col gap-1.5">
-          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-            Governance
-          </span>
-          <div className="flex flex-wrap gap-1.5">
-            {governanceTypes.map((gt) => {
-              const isActive = filters.governance.includes(gt);
-              return (
+            <FilterGroup label="Governance">
+              {governanceTypes.map((gt) => (
                 <button
                   key={gt}
                   onClick={() => toggleFilter("governance", gt)}
-                  className={cn(
-                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
-                    isActive
-                      ? "bg-brand-800 text-white"
-                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
-                  )}
+                  className={pillClass(filters.governance.includes(gt))}
                 >
                   {gt}
                 </button>
-              );
-            })}
+              ))}
+            </FilterGroup>
+
+            {hasActiveFilters && (
+              <div className="flex items-end ml-auto self-end">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    clearAll();
+                  }}
+                  className="flex items-center gap-1 px-3 py-1 rounded-full text-sm text-red-600 hover:bg-red-50 transition-colors"
+                >
+                  <X className="h-3.5 w-3.5" />
+                  Clear All
+                </button>
+              </div>
+            )}
           </div>
         </div>
-
-        {hasActiveFilters && (
-          <div className="flex items-end ml-auto">
-            <button
-              onClick={(e) => { e.stopPropagation(); clearAll(); }}
-              className="flex items-center gap-1 px-3 py-1 rounded-full text-sm text-red-600 hover:bg-red-50 transition-colors"
-            >
-              <X className="h-3.5 w-3.5" />
-              Clear All
-            </button>
-          </div>
-        )}
-      </div>
-      </div>
       )}
     </div>
   );
