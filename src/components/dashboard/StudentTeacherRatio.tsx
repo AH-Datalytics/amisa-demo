@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
 import {
   BarChart,
   Bar,
@@ -74,10 +73,21 @@ export default function StudentTeacherRatio({
           <CartesianGrid strokeDasharray="3 3" stroke="#E2E8F0" vertical={false} />
           <XAxis
             dataKey="shortName"
-            tick={{ fontSize: 10, fill: "#64748B" }}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            tick={(props: any) => {
+              const { x, y, payload } = props;
+              const item = chartData.find((d) => d.shortName === payload.value);
+              return (
+                <g transform={`rotate(-35, ${x}, ${y})`}>
+                  <a href={item ? `/schools/${item.id}` : "#"} style={{ cursor: "pointer" }}>
+                    <text x={x} y={y} dy={12} textAnchor="end" fontSize={10} fill="#1E40AF">
+                      {payload.value}
+                    </text>
+                  </a>
+                </g>
+              );
+            }}
             tickLine={false}
-            angle={-35}
-            textAnchor="end"
             height={60}
           />
           <YAxis
@@ -133,17 +143,6 @@ export default function StudentTeacherRatio({
         </span>
       </div>
 
-      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 px-2 justify-center">
-        {chartData.map((d) => (
-          <Link
-            key={d.id}
-            href={`/schools/${d.id}`}
-            className="text-xs text-brand-600 hover:text-brand-800 hover:underline transition-colors"
-          >
-            {shortenName(d.name)}
-          </Link>
-        ))}
-      </div>
     </div>
   );
 }

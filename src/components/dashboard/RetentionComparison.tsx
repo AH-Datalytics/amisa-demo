@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
 import {
   BarChart,
   Bar,
@@ -78,7 +77,20 @@ export default function RetentionComparison({
             dataKey="shortName"
             type="category"
             width={140}
-            tick={{ fontSize: 11, fill: "#64748B" }}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            tick={(props: any) => {
+              const { x, y, payload } = props;
+              const item = chartData.find((d) => d.shortName === payload.value);
+              return (
+                <g>
+                  <a href={item ? `/schools/${item.id}` : "#"} style={{ cursor: "pointer" }}>
+                    <text x={x - 4} y={y} dy={4} textAnchor="end" fontSize={11} fill="#1E40AF">
+                      {payload.value}
+                    </text>
+                  </a>
+                </g>
+              );
+            }}
             tickLine={false}
           />
           <Tooltip
@@ -122,17 +134,6 @@ export default function RetentionComparison({
         </span>
       </div>
 
-      <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 px-2">
-        {chartData.map((d) => (
-          <Link
-            key={d.id}
-            href={`/schools/${d.id}`}
-            className="text-xs text-brand-600 hover:text-brand-800 hover:underline transition-colors"
-          >
-            {shortenName(d.name)}
-          </Link>
-        ))}
-      </div>
     </div>
   );
 }
