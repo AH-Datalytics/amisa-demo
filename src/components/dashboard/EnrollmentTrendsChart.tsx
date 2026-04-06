@@ -1,7 +1,6 @@
 "use client";
 
 import { useMemo } from "react";
-import Link from "next/link";
 import {
   LineChart,
   Line,
@@ -10,7 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
 } from "recharts";
 import { formatNumber } from "@/lib/utils";
 import type { School, AnnualMetrics } from "@/lib/types";
@@ -29,10 +27,6 @@ const REGION_COLORS: Record<string, string> = {
 
 function getSchoolColor(school: School): string {
   return REGION_COLORS[school.region] || "#64748B";
-}
-
-function shortenName(name: string): string {
-  return name.length > 15 ? name.slice(0, 15) + "..." : name;
 }
 
 export default function EnrollmentTrendsChart({
@@ -63,8 +57,6 @@ export default function EnrollmentTrendsChart({
     return { chartData: data, schoolNames: names };
   }, [filteredSchools, metrics]);
 
-  const showScrollableLegend = filteredSchools.length > 6;
-
   return (
     <div>
       <ResponsiveContainer width="100%" height={340}>
@@ -92,18 +84,10 @@ export default function EnrollmentTrendsChart({
             }}
             formatter={(value, name) => [
               formatNumber(Number(value)),
-              schoolNames[String(name)] ? shortenName(schoolNames[String(name)]) : String(name),
+              schoolNames[String(name)] || String(name),
             ]}
             labelFormatter={(label) => `Year: ${label}`}
           />
-          {!showScrollableLegend && (
-            <Legend
-              formatter={(value) =>
-                shortenName(schoolNames[String(value)] || String(value))
-              }
-              wrapperStyle={{ fontSize: "12px" }}
-            />
-          )}
           {filteredSchools.map((school) => (
             <Line
               key={school.id}
@@ -118,38 +102,17 @@ export default function EnrollmentTrendsChart({
         </LineChart>
       </ResponsiveContainer>
 
-      {showScrollableLegend && (
-        <div className="mt-3 border-t border-slate-100 pt-2">
-          <div className="flex flex-wrap gap-x-4 gap-y-1 px-2 mb-2">
-            {Object.entries(REGION_COLORS).map(([region, color]) => (
-              <span key={region} className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
-                <span
-                  className="inline-block w-3 h-0.5 flex-shrink-0"
-                  style={{ backgroundColor: color }}
-                />
-                {region}
-              </span>
-            ))}
-          </div>
-          <div className="flex flex-wrap gap-x-4 gap-y-1.5 px-2 max-h-20 overflow-y-auto">
-            {filteredSchools.map((school) => (
-              <Link
-                key={school.id}
-                href={`/schools/${school.id}`}
-                className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-brand-700 transition-colors"
-              >
-                <span
-                  className="inline-block w-3 h-3 rounded-full flex-shrink-0"
-                  style={{
-                    backgroundColor: getSchoolColor(school),
-                  }}
-                />
-                {shortenName(school.name)}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
+      <div className="flex items-center gap-5 mt-3 px-2">
+        {Object.entries(REGION_COLORS).map(([region, color]) => (
+          <span key={region} className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+            <span
+              className="inline-block w-4 h-0.5 flex-shrink-0 rounded"
+              style={{ backgroundColor: color }}
+            />
+            {region}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
