@@ -60,8 +60,8 @@ export default function KPICards({ kpis }: KPICardsProps) {
             className="relative bg-white rounded-xl shadow-sm border border-slate-200 p-5 animate-fade-in-up card-interactive"
             style={{ animationDelay: `${index * 60}ms` }}
           >
-            <Icon className="absolute top-4 right-4 h-5 w-5 text-slate-300" />
-            <div className="text-3xl font-mono font-bold text-brand-900">
+            <Icon className="absolute top-4 right-4 h-5 w-5 text-slate-200" />
+            <div className="text-3xl font-mono font-bold text-brand-900 pr-7">
               {card.format(value)}
             </div>
             <div className="mt-1 text-sm text-slate-500">{card.label}</div>
