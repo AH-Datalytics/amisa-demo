@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Plus, Pencil, Eye, CheckCircle, XCircle, Calendar, FileText } from "lucide-react";
+import { Plus, Pencil, Eye, CheckCircle, XCircle, Calendar, FileText, Download } from "lucide-react";
 import { surveys as initialSurveys } from "@/data/surveys";
 import { useAuth } from "@/lib/auth-context";
+import { exportCsv, makeExportFilename } from "@/lib/export-csv";
 import type { Survey, SurveyStatus } from "@/lib/types";
 
 const statusConfig: Record<SurveyStatus, { label: string; className: string }> = {
@@ -154,13 +155,37 @@ export default function SurveyList({ onViewResults }: SurveyListProps) {
                   )}
 
                   {(survey.status === "distributed" || survey.status === "completed") && (
-                    <button
-                      onClick={() => onViewResults?.(survey)}
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-medium text-brand-700 transition hover:bg-brand-100"
-                    >
-                      <Eye className="h-3.5 w-3.5" />
-                      View Results
-                    </button>
+                    <>
+                      <button
+                        onClick={() => onViewResults?.(survey)}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-brand-200 bg-brand-50 px-3 py-1.5 text-xs font-medium text-brand-700 transition hover:bg-brand-100"
+                      >
+                        <Eye className="h-3.5 w-3.5" />
+                        View Results
+                      </button>
+                      <button
+                        onClick={() => {
+                          const headers = ["School", "Completed", "Completion Date"];
+                          const rows = survey.completions.map((c) => [
+                            c.schoolName,
+                            c.completed ? "Yes" : "No",
+                            c.completedAt
+                              ? new Date(c.completedAt).toLocaleDateString()
+                              : "",
+                          ]);
+                          exportCsv(
+                            makeExportFilename(survey.id),
+                            headers,
+                            rows
+                          );
+                        }}
+                        className="text-slate-400 hover:text-slate-600 transition-colors p-1 rounded hover:bg-slate-100"
+                        aria-label={`Export ${survey.title} responses as CSV`}
+                        title="Export responses as CSV"
+                      >
+                        <Download className="w-4 h-4" />
+                      </button>
+                    </>
                   )}
                 </div>
               </div>
