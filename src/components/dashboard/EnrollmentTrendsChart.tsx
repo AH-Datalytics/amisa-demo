@@ -21,18 +21,18 @@ interface EnrollmentTrendsChartProps {
 }
 
 const CHART_COLORS = [
+  "#1E3A8A",
   "#1E40AF",
+  "#1D4ED8",
+  "#2563EB",
+  "#3B82F6",
+  "#60A5FA",
+  "#93C5FD",
+  "#BFDBFE",
   "#D97706",
-  "#059669",
-  "#DC2626",
-  "#7C3AED",
-  "#0891B2",
-  "#BE185D",
-  "#65A30D",
-  "#EA580C",
-  "#4338CA",
-  "#0D9488",
-  "#9333EA",
+  "#64748B",
+  "#94A3B8",
+  "#CBD5E1",
 ];
 
 function shortenName(name: string): string {

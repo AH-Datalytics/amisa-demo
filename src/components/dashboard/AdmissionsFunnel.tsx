@@ -20,7 +20,7 @@ interface AdmissionsFunnelProps {
   metrics: AnnualMetrics[];
 }
 
-const STAGE_COLORS = ["#1E40AF", "#3B82F6", "#D97706"];
+const STAGE_COLORS = ["#1E40AF", "#3B82F6", "#93C5FD"];
 
 export default function AdmissionsFunnel({
   filteredSchools,
@@ -119,7 +119,7 @@ export default function AdmissionsFunnel({
           <div className="text-xs text-slate-500 uppercase tracking-wide">
             Yield Rate
           </div>
-          <div className="text-lg font-mono font-bold text-accent-600">
+          <div className="text-lg font-mono font-bold text-brand-600">
             {formatPercent(yieldRate)}
           </div>
         </div>

@@ -115,13 +115,13 @@ export default function FacultyComposition({
           <Bar
             dataKey="us"
             stackId="faculty"
-            fill="#D97706"
+            fill="#60A5FA"
             radius={[0, 0, 0, 0]}
           />
           <Bar
             dataKey="thirdCountry"
             stackId="faculty"
-            fill="#94A3B8"
+            fill="#CBD5E1"
             radius={[4, 4, 0, 0]}
           />
         </BarChart>
