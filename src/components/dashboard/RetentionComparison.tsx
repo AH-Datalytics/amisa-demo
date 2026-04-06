@@ -84,7 +84,7 @@ export default function RetentionComparison({
               return (
                 <g>
                   <a href={item ? `/schools/${item.id}` : "#"} style={{ cursor: "pointer" }}>
-                    <text x={x - 4} y={y} dy={4} textAnchor="end" fontSize={11} fill="#1E40AF">
+                    <text x={x - 4} y={y} dy={4} textAnchor="end" fontSize={11} fill="#64748B" className="hover:fill-[#1E40AF] hover:underline">
                       {payload.value}
                     </text>
                   </a>
