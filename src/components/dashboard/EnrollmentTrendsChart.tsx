@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
 import {
   LineChart,
   Line,
@@ -20,13 +21,17 @@ interface EnrollmentTrendsChartProps {
 
 const REGION_COLORS: Record<string, string> = {
   "South America": "#1E40AF",
-  "Central America": "#059669",
-  "Caribbean": "#D97706",
-  "North America": "#7C3AED",
+  "Central America": "#3B82F6",
+  "Caribbean": "#93C5FD",
+  "North America": "#94A3B8",
 };
 
 function getSchoolColor(school: School): string {
   return REGION_COLORS[school.region] || "#64748B";
+}
+
+function shortenName(name: string): string {
+  return name.length > 18 ? name.slice(0, 18) + "..." : name;
 }
 
 export default function EnrollmentTrendsChart({
@@ -102,15 +107,19 @@ export default function EnrollmentTrendsChart({
         </LineChart>
       </ResponsiveContainer>
 
-      <div className="flex items-center gap-5 mt-3 px-2">
-        {Object.entries(REGION_COLORS).map(([region, color]) => (
-          <span key={region} className="flex items-center gap-1.5 text-xs font-medium text-slate-500">
+      <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 px-2">
+        {filteredSchools.map((school) => (
+          <Link
+            key={school.id}
+            href={`/schools/${school.id}`}
+            className="flex items-center gap-1.5 text-xs text-brand-600 hover:text-brand-800 hover:underline transition-colors"
+          >
             <span
               className="inline-block w-4 h-0.5 flex-shrink-0 rounded"
-              style={{ backgroundColor: color }}
+              style={{ backgroundColor: getSchoolColor(school) }}
             />
-            {region}
-          </span>
+            {shortenName(school.name)}
+          </Link>
         ))}
       </div>
     </div>

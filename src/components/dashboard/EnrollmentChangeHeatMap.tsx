@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
+import Link from "next/link";
 import type { School, AnnualMetrics } from "@/lib/types";
 import { formatNumber } from "@/lib/utils";
 
@@ -85,8 +86,13 @@ export default function EnrollmentChangeHeatMap({
           <tbody>
             {heatData.map(({ school, cells }) => (
               <tr key={school.id} className="border-t border-slate-100">
-                <td className="py-2 pr-4 text-slate-700 font-medium sticky left-0 bg-white text-xs">
-                  {school.name}
+                <td className="py-2 pr-4 font-medium sticky left-0 bg-white text-xs">
+                  <Link
+                    href={`/schools/${school.id}`}
+                    className="text-brand-600 hover:text-brand-800 hover:underline transition-colors"
+                  >
+                    {school.name}
+                  </Link>
                 </td>
                 {cells.map((cell, idx) => {
                   if (!cell) {
