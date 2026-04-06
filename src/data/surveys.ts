@@ -12,6 +12,41 @@ export const surveys: Survey[] = [
     totalSchools: 12,
     completedSchools: 8,
     questionCount: 10,
+    results: [
+      {
+        questionId: "q1",
+        questionTitle: "Primary enrollment challenge this year",
+        questionType: "multiple-choice",
+        options: [
+          { label: "Declining applications", count: 3 },
+          { label: "Retention of current families", count: 4 },
+          { label: "Competition from local schools", count: 2 },
+          { label: "Visa/immigration barriers", count: 1 },
+          { label: "No significant challenge", count: 2 },
+        ],
+        responseCount: 8,
+      },
+      {
+        questionId: "q2",
+        questionTitle: "Satisfaction with current tuition pricing model",
+        questionType: "likert",
+        average: 3.6,
+        responseCount: 8,
+      },
+      {
+        questionId: "q3",
+        questionTitle: "Planned tuition increase for next year",
+        questionType: "multiple-choice",
+        options: [
+          { label: "0-3%", count: 2 },
+          { label: "3-5%", count: 4 },
+          { label: "5-8%", count: 1 },
+          { label: "8%+", count: 0 },
+          { label: "Decrease planned", count: 1 },
+        ],
+        responseCount: 8,
+      },
+    ],
     completions: [
       {
         schoolId: "academia-americana-sp",
@@ -98,6 +133,27 @@ export const surveys: Survey[] = [
     totalSchools: 12,
     completedSchools: 2,
     questionCount: 15,
+    results: [
+      {
+        questionId: "q1",
+        questionTitle: "Average faculty salary range (USD)",
+        questionType: "multiple-choice",
+        options: [
+          { label: "$30k-$45k", count: 0 },
+          { label: "$45k-$60k", count: 1 },
+          { label: "$60k-$80k", count: 1 },
+          { label: "$80k+", count: 0 },
+        ],
+        responseCount: 2,
+      },
+      {
+        questionId: "q2",
+        questionTitle: "Satisfaction with faculty compensation competitiveness",
+        questionType: "likert",
+        average: 2.8,
+        responseCount: 2,
+      },
+    ],
     completions: [
       {
         schoolId: "academia-americana-sp",

@@ -70,6 +70,7 @@ export interface Survey {
   completedSchools: number;
   completions: SurveyCompletion[];
   questionCount: number;
+  results?: SurveyResultData[];
 }
 
 export interface SurveyCompletion {
@@ -77,6 +78,15 @@ export interface SurveyCompletion {
   schoolName: string;
   completed: boolean;
   completedAt: string | null;
+}
+
+export interface SurveyResultData {
+  questionId: string;
+  questionTitle: string;
+  questionType: "multiple-choice" | "likert" | "open-response";
+  options?: { label: string; count: number }[];
+  average?: number;
+  responseCount: number;
 }
 
 export interface MAPScore {

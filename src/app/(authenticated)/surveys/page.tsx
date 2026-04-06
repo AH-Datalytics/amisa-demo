@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ClipboardList } from "lucide-react";
 import SurveyList from "@/components/surveys/SurveyList";
 import CompletionTracker from "@/components/surveys/CompletionTracker";
+import SurveyResults from "@/components/surveys/SurveyResults";
 import type { Survey } from "@/lib/types";
 
 export default function SurveysPage() {
@@ -31,10 +32,15 @@ export default function SurveysPage() {
       {/* Survey list */}
       <SurveyList onViewResults={handleViewResults} />
 
-      {/* Completion tracker */}
+      {/* Completion tracker and results */}
       {selectedSurvey && (
-        <div className="pt-2">
+        <div className="pt-2 space-y-6">
           <CompletionTracker survey={selectedSurvey} />
+          {selectedSurvey.results && selectedSurvey.results.length > 0 && (
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <SurveyResults results={selectedSurvey.results} />
+            </div>
+          )}
         </div>
       )}
     </div>
