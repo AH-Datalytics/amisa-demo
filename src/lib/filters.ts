@@ -16,6 +16,12 @@ export function getTuitionBand(tuitionHigh: number): string {
   return "premium";
 }
 
+export function getGradeLevel(gradeRange: string): string {
+  if (gradeRange.startsWith("PreK")) return "PreK-12";
+  if (gradeRange.startsWith("K")) return "K-12";
+  return gradeRange;
+}
+
 export function filterSchools(
   allSchools: School[],
   filters: FilterState
@@ -44,6 +50,16 @@ export function filterSchools(
     if (
       filters.country.length > 0 &&
       !filters.country.includes(school.country)
+    )
+      return false;
+    if (
+      filters.governance.length > 0 &&
+      !filters.governance.includes(school.governance)
+    )
+      return false;
+    if (
+      filters.gradeLevel.length > 0 &&
+      !filters.gradeLevel.includes(getGradeLevel(school.gradeRange))
     )
       return false;
     return true;

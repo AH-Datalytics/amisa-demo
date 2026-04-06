@@ -3,6 +3,8 @@
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
 import type { FilterState } from "@/lib/types";
+import { schools } from "@/data/schools";
+import { getGradeLevel } from "@/lib/filters";
 
 interface PeerFiltersProps {
   filters: FilterState;
@@ -56,6 +58,10 @@ const filterGroups: FilterGroup[] = [
 ];
 
 export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
+  const countries = Array.from(new Set(schools.map((s) => s.country))).sort();
+  const gradeLevels = Array.from(new Set(schools.map((s) => getGradeLevel(s.gradeRange)))).sort();
+  const governanceTypes = ["Nonprofit", "Religious", "Proprietary"];
+
   const toggleFilter = (key: keyof FilterState, value: string) => {
     setFilters((prev) => {
       const current = prev[key];
@@ -109,6 +115,81 @@ export default function PeerFilters({ filters, setFilters }: PeerFiltersProps) {
             </div>
           </div>
         ))}
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+            Country
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {countries.map((c) => {
+              const isActive = filters.country.includes(c);
+              return (
+                <button
+                  key={c}
+                  onClick={() => toggleFilter("country", c)}
+                  className={cn(
+                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
+                    isActive
+                      ? "bg-brand-800 text-white"
+                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
+                  )}
+                >
+                  {c}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+            Grade Levels
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {gradeLevels.map((g) => {
+              const isActive = filters.gradeLevel.includes(g);
+              return (
+                <button
+                  key={g}
+                  onClick={() => toggleFilter("gradeLevel", g)}
+                  className={cn(
+                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
+                    isActive
+                      ? "bg-brand-800 text-white"
+                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
+                  )}
+                >
+                  {g}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+            Governance
+          </span>
+          <div className="flex flex-wrap gap-1.5">
+            {governanceTypes.map((gt) => {
+              const isActive = filters.governance.includes(gt);
+              return (
+                <button
+                  key={gt}
+                  onClick={() => toggleFilter("governance", gt)}
+                  className={cn(
+                    "px-3 py-1 rounded-full text-sm transition-colors active:scale-95",
+                    isActive
+                      ? "bg-brand-800 text-white"
+                      : "bg-white border border-slate-200 text-slate-600 hover:border-brand-300 hover:shadow-sm"
+                  )}
+                >
+                  {gt}
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
         {hasActiveFilters && (
           <div className="flex items-end ml-auto">
